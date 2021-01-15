@@ -8,6 +8,7 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new
 
     assert_instance_of Enigma, enigma
+    assert_equal "hello world", enigma.starter_message
   end
 
 end
