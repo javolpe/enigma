@@ -64,12 +64,12 @@ class EncryptingMachineTest < Minitest::Test
     enigma = mock
     machine = EncryptingMachine.new(["hello world!", "09547", "150121"], enigma)
     
-    assert_equal true, engine.message_divisible_by_four?
+    assert_equal true, machine.message_divisible_by_four?
 
     enigma = mock
     machine = EncryptingMachine.new(["hello world!&@", "09547", "150121"], enigma)
     
-    assert_equal false, engine.message_divisible_by_four?
+    assert_equal false, machine.message_divisible_by_four?
   end
 
   

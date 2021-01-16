@@ -40,5 +40,13 @@ class EncryptingMachine
     encoded_alphabet = Hash[start.zip(finish)]
   end 
 
+  def message_divisible_by_four?
+    if @plain_message.length % 4 == 0
+      true
+    else 
+      false
+    end
+  end
+
   
 end
