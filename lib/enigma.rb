@@ -6,12 +6,13 @@ class Enigma
   attr_reader :starter_message
 
 
-  def initialize(arg1)
-     @starter_message = get_starter_message(arg1)
+  def initialize(message_file)
+     @starter_message = get_starter_message(message_file)
   end
 
-  def get_starter_message(arg)
-    new_file = File.read(arg)
+  def get_starter_message(message_file)
+    new_file = File.read(message_file)
+    new_file.downcase
   end
 
   def generate_five_digit_number
