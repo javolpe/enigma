@@ -38,9 +38,5 @@ class EncryptingMachine
     secret_hash = shift_hash
     finish = start.rotate(secret_hash[symbol])
     encoded_alphabet = Hash[start.zip(finish)]
-  end
-
-
-
-  
+  end 
 end

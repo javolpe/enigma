@@ -59,4 +59,6 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal "w", machine.encoder_hash(:D)["b"]
     assert_equal 27, machine.encoder_hash(:A).count
   end
+
+  
 end
