@@ -42,4 +42,26 @@ class EnigmaTest < Minitest::Test
     assert_equal String, enigma.make_starter_array[1].class
     assert_equal 3, enigma.make_starter_array.count
   end
+
+  def test_put_into_encrypting_machine_message_divisble_by_4
+    enigma = Enigma.new("./message.txt")
+
+    assert_equal Array, enigma.put_into_encrypting_machine.class
+    assert_equal 3, enigma.put_into_encrypting_machine.count
+    assert_equal String, enigma.put_into_encrypting_machine[0].class
+    assert_equal 6, enigma.put_into_encrypting_machine[2].length
+    assert_equal 5, enigma.put_into_encrypting_machine[1].length
+    assert_equal enigma.starter_message.length, enigma.put_into_encrypting_machine[0].length
+  end
+
+  def test_put_into_encrypting_machine_message_NOT_divisble_by_4
+    enigma = Enigma.new("./message_2.txt")
+
+    assert_equal Array, enigma.put_into_encrypting_machine.class
+    assert_equal 3, enigma.put_into_encrypting_machine.count
+    assert_equal String, enigma.put_into_encrypting_machine[0].class
+    assert_equal 6, enigma.put_into_encrypting_machine[2].length
+    assert_equal 5, enigma.put_into_encrypting_machine[1].length
+    assert_equal enigma.starter_message.length, enigma.put_into_encrypting_machine[0].length
+  end
 end

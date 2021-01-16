@@ -11,8 +11,8 @@ class Enigma
   end
 
   def get_starter_message(message_file)
-    new_file = File.read(message_file)
-    new_file.downcase
+    unencoded_message = File.read(message_file)
+    unencoded_message.downcase
   end
 
   def generate_five_digit_number
@@ -33,6 +33,10 @@ class Enigma
   def put_into_encrypting_machine
      start = make_starter_array
      machine = EncryptingMachine.new(start, self)
+     encrypted = machine.decide_encryption_path
+    final_array = [encrypted]
+    final_array << machine.code
+    final_array << machine.date
   end
 
 end

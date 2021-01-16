@@ -29,14 +29,74 @@ class EncryptingMachine
     values = [@code[0..1].to_i + shift[0].to_i, @code[1..2].to_i + shift[1].to_i]
     values << (@code[2..3].to_i + shift[2].to_i)
     values << (@code[3..4].to_i + shift[3].to_i)
-    secret_hash = Hash[keys.zip(values)]
+    code_hash = Hash[keys.zip(values)]
   end
 
-  
   def encoder_hash(symbol)
     start = base 
-    secret_hash = shift_hash
-    finish = start.rotate(secret_hash[symbol])
+    code_hash = shift_hash
+    finish = start.rotate(code_hash[symbol])
     encoded_alphabet = Hash[start.zip(finish)]
   end 
+
+  def message_divisible_by_four?
+    if @plain_message.length % 4 == 0
+      true
+    else 
+      false
+    end
+  end
+
+  def decide_encryption_path
+    if message_divisible_by_four?
+      encyrpt_divisible_by_four 
+    else 
+      encrypt_NOT_divisible_by_four
+    end
+  end
+
+  def encyrpt_divisible_by_four
+    split_message = @plain_message.split("")
+    x = split_message.length / 4 
+    new_message = encyrpt_four_letters_at_a_time(split_message, x)
+  end
+
+  def encyrpt_four_letters_at_a_time(message, x, i=-1)
+    new_message = [] 
+    x.times do 
+      new_message << encode_letter(:A, message[i+=1])
+      new_message << encode_letter(:B, message[i+=1])
+      new_message << encode_letter(:C, message[i+=1])
+      new_message << encode_letter(:D, message[i+=1])
+    end
+    new_message.join
+  end
+
+  def encode_letter(symbol, letter)
+    encoder = encoder_hash(symbol)
+    if encoder[letter].nil?
+      new_letter = letter
+    else 
+      new_letter = encoder[letter]
+    end
+  end 
+
+  def encrypt_NOT_divisible_by_four
+    x = @plain_message.length % 4
+    start_of_message = @plain_message[0..(-x)-1].split("")
+    first_half = encyrpt_four_letters_at_a_time(start_of_message, start_of_message.length/4)
+    end_of_message = @plain_message[-x..-1].split("")
+    second_half = encrypt_dynamic_number_of_letters(end_of_message)
+    encrypted = first_half + second_half
+  end
+
+  def encrypt_dynamic_number_of_letters(end_of_message, i=0)
+    sym_array = [:A, :B, :C]
+    new_message =[] 
+    end_of_message.length.times do 
+      new_message << encode_letter(sym_array[i], end_of_message[i])
+      i+=1
+    end
+    new_message.join
+  end
 end
