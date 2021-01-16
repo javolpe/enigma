@@ -33,8 +33,14 @@ class EncryptingMachine
   end
 
   def a_shift
+    start = base 
+    secret_hash = shift_hash
+    finish = start.rotate(secret_hash[:A])
+    a_shift = Hash[start.zip(finish)]
+  end
+
+  def encoder_hash(symbol)
     
-  
   end
 
 

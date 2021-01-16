@@ -56,4 +56,17 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal "n", machine.a_shift["a"]
     assert_equal 27, machine.a_shift.count
   end
+
+  def test_encoder_hash
+    enigma = mock
+    machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
+
+    assert_equal Hash, machine.encoder_hash(:A).class
+    assert_equal String, machine.encoder_hash(:B)["a"].class
+    assert_equal "n", machine.encoder_hash(:A)["a"]
+    assert_equal "u", machine.encoder_hash(:B)["a"]
+    assert_equal "d", machine.encoder_hash(:C)[" "]
+    assert_equal "w", machine.encoder_hash(:D)["b"]
+    assert_equal 27, machine.encoder_hash(:A).count
+  end
 end
