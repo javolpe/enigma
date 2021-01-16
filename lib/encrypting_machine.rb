@@ -17,5 +17,16 @@ class EncryptingMachine
     start = ("a".."z").to_a << " "
   end
 
+  def shifter
+    date_integer = @date.to_i
+    squared = date_integer * date_integer
+    final = squared.to_s[-4..-1]
+  end
+
+  def shift_hash
+    
+
+  end
+
   
 end

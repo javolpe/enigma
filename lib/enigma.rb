@@ -30,9 +30,9 @@ class Enigma
     array = [@starter_message, code, date]
   end
 
-    def put_into_encrypting_machine
-      start = make_starter_array
-      machine = EncryptingMachine.new(start, self)
-    end
+  def put_into_encrypting_machine
+     start = make_starter_array
+     machine = EncryptingMachine.new(start, self)
+  end
 
 end

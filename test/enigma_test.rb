@@ -9,13 +9,13 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new("./message.txt")
 
     assert_instance_of Enigma, enigma
-    assert_equal "hello world", enigma.starter_message
+    assert_equal "hello world!", enigma.starter_message
   end
 
   def test_read_initial_message
     enigma = Enigma.new("./message.txt")
 
-    assert_equal  "hello world", enigma.starter_message
+    assert_equal  "hello world!", enigma.starter_message
   end
 
   def test_generate_five_digit_number
@@ -42,5 +42,4 @@ class EnigmaTest < Minitest::Test
     assert_equal String, enigma.make_starter_array[1].class
     assert_equal 3, enigma.make_starter_array.count
   end
-
 end
