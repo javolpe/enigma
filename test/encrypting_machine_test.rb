@@ -26,4 +26,11 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal "a", machine.base[0]
     assert_equal 27, machine.base.count
   end
+
+  def test_shifter
+    enigma = mock
+    machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
+
+    assert_equal "4641", machine.shifter
+  end
 end

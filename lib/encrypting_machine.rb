@@ -16,4 +16,6 @@ class EncryptingMachine
   def base 
     start = ("a".."z").to_a << " "
   end
+
+  
 end
