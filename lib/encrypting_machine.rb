@@ -24,9 +24,15 @@ class EncryptingMachine
   end
 
   def shift_hash
-    
-
+    shift = shifter
+    keys = [:A, :B, :C, :D]
+    values = [@code[0..1].to_i + shift[0].to_i, @code[1..2].to_i + shift[1].to_i]
+    values << (@code[2..3].to_i + shift[2].to_i)
+    values << (@code[3..4].to_i + shift[3].to_i)
+    secret_hash = Hash[keys.zip(values)]
   end
+
+
 
   
 end
