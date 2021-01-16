@@ -61,8 +61,10 @@ class EncryptingMachineTest < Minitest::Test
     machine = EncryptingMachine.new("hello world!", "09547", "150121")
     
     assert_equal true, machine.message_divisible_by_four?
+  end
 
-    machine = EncryptingMachine.new("hello world!&@", "09547", "150121")
+  def test_message_divisible_by_four_false
+    machine = EncryptingMachine.new("hello world!@%", "09547", "150121")
     
     assert_equal false, machine.message_divisible_by_four?
   end
@@ -73,6 +75,13 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal "uypfat ideh!", machine.encrypt_divisible_by_four
     assert_equal String, machine.encrypt_divisible_by_four.class
     assert_equal machine.plain_message.length, machine.encrypt_divisible_by_four.length
+  end
+
+  def test_encrypt_divisible_by_four_false
+    machine = EncryptingMachine.new("hello world", "09547", "150121")
+
+    assert_equal "uypfat i", machine.encrypt_divisible_by_four
+    assert_equal String, machine.encrypt_divisible_by_four.class
   end
 
   def test_encode_letter

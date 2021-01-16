@@ -9,6 +9,7 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new("./message.txt")
 
     assert_instance_of Enigma, enigma
+    assert_equal "hello world!", enigma.starter_message
   end
 
   def test_get_starter_message
@@ -17,21 +18,20 @@ class EnigmaTest < Minitest::Test
     assert_equal  "hello world!", enigma.get_starter_message("./message.txt")
   end
 
-
-  def test_read_initial_message
-    enigma = Enigma.new("./message.txt")
-
-    assert_equal  "hello world!", enigma.starter_message
-  end
-
-  def test_generate_five_digit_number
+  def test_generate_code
     enigma = Enigma.new("./message.txt")
 
     assert_equal String, enigma.generate_code.class
     assert_equal 5, enigma.generate_code.length
   end
 
-  def test_generate_date_stamp
+  def test_message 
+    enigma = Enigma.new("./message.txt")
+
+    assert_equal "hello world!", enigma.message
+  end
+
+  def test_generate_date
     enigma = Enigma.new("./message.txt")
 
 
@@ -60,5 +60,16 @@ class EnigmaTest < Minitest::Test
     }
 
     assert_equal expected, enigma.encrypt("hello world!", "02715")
+  end
+
+  def test_encrypt_NOT_divisible_by_four_no_date
+    enigma = Enigma.new("./message.txt")
+    expected = {
+      encryption: "nkfaufqdxry",
+      key: "02715",
+      date: "160121"
+    }
+
+    assert_equal expected, enigma.encrypt("hello world", "02715")
   end
 end
