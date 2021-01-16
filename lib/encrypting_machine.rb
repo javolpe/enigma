@@ -3,14 +3,12 @@ require_relative './enigma'
 class EncryptingMachine
   attr_reader :plain_message,
               :code,
-              :date,
-              :enigma
+              :date
 
-  def initialize(array, enigma)
-     @plain_message = array[0]
-     @code   = array[1]
-     @date   = array[2]
-     @enigma = enigma
+  def initialize(message, code, date)
+     @plain_message = message
+     @code   = code
+     @date   = date
   end
 
   def base 
@@ -49,19 +47,19 @@ class EncryptingMachine
 
   def decide_encryption_path
     if message_divisible_by_four?
-      encyrpt_divisible_by_four 
+      encrypt_divisible_by_four 
     else 
       encrypt_NOT_divisible_by_four
     end
   end
 
-  def encyrpt_divisible_by_four
+  def encrypt_divisible_by_four
     split_message = @plain_message.split("")
     x = split_message.length / 4 
-    new_message = encyrpt_four_letters_at_a_time(split_message, x)
+    new_message = encrypt_four_letters_at_a_time(split_message, x)
   end
 
-  def encyrpt_four_letters_at_a_time(message, x, i=-1)
+  def encrypt_four_letters_at_a_time(message, x, i=-1)
     new_message = [] 
     x.times do 
       new_message << encode_letter(:A, message[i+=1])
@@ -84,7 +82,7 @@ class EncryptingMachine
   def encrypt_NOT_divisible_by_four
     x = @plain_message.length % 4
     start_of_message = @plain_message[0..(-x)-1].split("")
-    first_half = encyrpt_four_letters_at_a_time(start_of_message, start_of_message.length/4)
+    first_half = encrypt_four_letters_at_a_time(start_of_message, start_of_message.length/4)
     end_of_message = @plain_message[-x..-1].split("")
     second_half = encrypt_dynamic_number_of_letters(end_of_message)
     encrypted = first_half + second_half

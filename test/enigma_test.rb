@@ -9,8 +9,14 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new("./message.txt")
 
     assert_instance_of Enigma, enigma
-    assert_equal "hello world!", enigma.starter_message
   end
+
+  def test_get_starter_message
+    enigma = Enigma.new("./message.txt")
+
+    assert_equal  "hello world!", enigma.get_starter_message("./message.txt")
+  end
+
 
   def test_read_initial_message
     enigma = Enigma.new("./message.txt")
@@ -21,47 +27,38 @@ class EnigmaTest < Minitest::Test
   def test_generate_five_digit_number
     enigma = Enigma.new("./message.txt")
 
-    assert_equal String, enigma.generate_five_digit_number.class
-    assert_equal 5, enigma.generate_five_digit_number.length
+    assert_equal String, enigma.generate_code.class
+    assert_equal 5, enigma.generate_code.length
   end
 
   def test_generate_date_stamp
     enigma = Enigma.new("./message.txt")
 
 
-    assert_equal "21", enigma.generate_date_stamp[-2..-1]
-    assert_equal String, enigma.generate_date_stamp.class
-    assert_equal 6, enigma.generate_date_stamp.length
+    assert_equal "21", enigma.generate_date[-2..-1]
+    assert_equal String, enigma.generate_date.class
+    assert_equal 6, enigma.generate_date.length
   end
 
-  def test_make_starter_array
+  def test_encrypt_divisible_by_four
     enigma = Enigma.new("./message.txt")
+    expected = {
+          encryption: "keder ohulw!",
+          key: "02715",
+          date: "040895"
+        }
 
-    assert_equal Array, enigma.make_starter_array.class
-    assert_equal String, enigma.make_starter_array[0].class
-    assert_equal String, enigma.make_starter_array[1].class
-    assert_equal 3, enigma.make_starter_array.count
+    assert_equal expected, enigma.encrypt("hello world!", "02715", "040895") 
   end
 
-  def test_put_into_encrypting_machine_message_divisble_by_4
+  def test_encrypt_divisible_by_four_no_date
     enigma = Enigma.new("./message.txt")
+    expected = {
+      encryption: "nkfaufqdxry!",
+      key: "02715",
+      date: "160121"
+    }
 
-    assert_equal Array, enigma.put_into_encrypting_machine.class
-    assert_equal 3, enigma.put_into_encrypting_machine.count
-    assert_equal String, enigma.put_into_encrypting_machine[0].class
-    assert_equal 6, enigma.put_into_encrypting_machine[2].length
-    assert_equal 5, enigma.put_into_encrypting_machine[1].length
-    assert_equal enigma.starter_message.length, enigma.put_into_encrypting_machine[0].length
-  end
-
-  def test_put_into_encrypting_machine_message_NOT_divisble_by_4
-    enigma = Enigma.new("./message_2.txt")
-
-    assert_equal Array, enigma.put_into_encrypting_machine.class
-    assert_equal 3, enigma.put_into_encrypting_machine.count
-    assert_equal String, enigma.put_into_encrypting_machine[0].class
-    assert_equal 6, enigma.put_into_encrypting_machine[2].length
-    assert_equal 5, enigma.put_into_encrypting_machine[1].length
-    assert_equal enigma.starter_message.length, enigma.put_into_encrypting_machine[0].length
+    assert_equal expected, enigma.encrypt("hello world!", "02715")
   end
 end
