@@ -20,7 +20,7 @@ class EncryptingMachineTest < Minitest::Test
 
   def test_base
     enigma = mock
-    machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
+    machine = EncryptingMachine.new(["hello world!", "09547", "150121"], enigma)
 
     assert_equal Array, machine.base.class 
     assert_equal "a", machine.base[0]
@@ -29,14 +29,14 @@ class EncryptingMachineTest < Minitest::Test
 
   def test_shifter
     enigma = mock
-    machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
+    machine = EncryptingMachine.new(["hello world!", "09547", "150121"], enigma)
 
     assert_equal "4641", machine.shifter
   end
 
   def test_shift_hash
     enigma = mock
-    machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
+    machine = EncryptingMachine.new(["hello world!", "09547", "150121"], enigma)
 
     expected = {:A => 13,
                 :B => 101,
@@ -49,7 +49,7 @@ class EncryptingMachineTest < Minitest::Test
 
   def test_encoder_hash
     enigma = mock
-    machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
+    machine = EncryptingMachine.new(["hello world!", "09547", "150121"], enigma)
 
     assert_equal Hash, machine.encoder_hash(:A).class
     assert_equal String, machine.encoder_hash(:B)["a"].class
@@ -58,6 +58,18 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal "d", machine.encoder_hash(:C)[" "]
     assert_equal "w", machine.encoder_hash(:D)["b"]
     assert_equal 27, machine.encoder_hash(:A).count
+  end
+
+  def test_message_divisible_by_four?
+    enigma = mock
+    machine = EncryptingMachine.new(["hello world!", "09547", "150121"], enigma)
+    
+    assert_equal true, engine.message_divisible_by_four?
+
+    enigma = mock
+    machine = EncryptingMachine.new(["hello world!&@", "09547", "150121"], enigma)
+    
+    assert_equal false, engine.message_divisible_by_four?
   end
 
   
