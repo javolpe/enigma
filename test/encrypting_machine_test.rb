@@ -47,16 +47,6 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal expected, machine.shift_hash
   end
 
-  def test_a_shift
-    enigma = mock
-    machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
-
-    assert_equal Hash, machine.a_shift.class
-    assert_equal String, machine.a_shift["a"].class
-    assert_equal "n", machine.a_shift["a"]
-    assert_equal 27, machine.a_shift.count
-  end
-
   def test_encoder_hash
     enigma = mock
     machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)

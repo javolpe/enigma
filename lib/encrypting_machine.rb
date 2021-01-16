@@ -32,15 +32,12 @@ class EncryptingMachine
     secret_hash = Hash[keys.zip(values)]
   end
 
-  def a_shift
+  
+  def encoder_hash(symbol)
     start = base 
     secret_hash = shift_hash
-    finish = start.rotate(secret_hash[:A])
-    a_shift = Hash[start.zip(finish)]
-  end
-
-  def encoder_hash(symbol)
-    
+    finish = start.rotate(secret_hash[symbol])
+    encoded_alphabet = Hash[start.zip(finish)]
   end
 
 
