@@ -32,6 +32,11 @@ class EncryptingMachine
     secret_hash = Hash[keys.zip(values)]
   end
 
+  def a_shift
+    
+  
+  end
+
 
 
   

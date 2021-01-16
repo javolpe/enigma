@@ -52,7 +52,8 @@ class EncryptingMachineTest < Minitest::Test
     machine = EncryptingMachine.new(["hello world", "09547", "150121"], enigma)
 
     assert_equal Hash, machine.a_shift.class
-    assert_equal String, machine.a_shift.class[:A]
+    assert_equal String, machine.a_shift["a"].class
+    assert_equal "n", machine.a_shift["a"]
     assert_equal 27, machine.a_shift.count
   end
 end
