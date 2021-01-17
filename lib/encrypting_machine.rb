@@ -37,37 +37,24 @@ class EncryptingMachine
     encoded_alphabet = Hash[start.zip(finish)]
   end 
 
-  def message_divisible_by_four?
-    if @plain_message.length % 4 == 0
-      true
-    else 
-      false
-    end
-  end
-
-  def decide_encryption_path
-    if message_divisible_by_four?
-      encrypt_divisible_by_four 
-    else 
-      encrypt_NOT_divisible_by_four
-    end
-  end
-
-  def encrypt_divisible_by_four
+  def encrypt_the_message(i = -1)
+    sym = 0
+    sym_array = [:A, :B, :C, :D]
+    new_message = []
     split_message = @plain_message.split("")
-    x = split_message.length / 4 
-    new_message = encrypt_four_letters_at_a_time(split_message, x)
-  end
-
-  def encrypt_four_letters_at_a_time(message, x, i=-1)
-    new_message = [] 
-    x.times do 
-      new_message << encode_letter(:A, message[i+=1])
-      new_message << encode_letter(:B, message[i+=1])
-      new_message << encode_letter(:C, message[i+=1])
-      new_message << encode_letter(:D, message[i+=1])
+    split_message.length.times do 
+      new_message << encode_letter(sym_array[sym], split_message[i+=1])
+      sym = keep_sym_under_three(sym)
     end
     new_message.join
+  end
+
+  def keep_sym_under_three(sym)
+    if sym >= 3
+       sym = 0
+    else 
+      sym +=1
+    end
   end
 
   def encode_letter(symbol, letter)
@@ -78,23 +65,4 @@ class EncryptingMachine
       new_letter = encoder[letter]
     end
   end 
-
-  def encrypt_NOT_divisible_by_four
-    x = @plain_message.length % 4
-    start_of_message = @plain_message[0..(-x)-1].split("")
-    first_half = encrypt_four_letters_at_a_time(start_of_message, start_of_message.length/4)
-    end_of_message = @plain_message[-x..-1].split("")
-    second_half = encrypt_dynamic_number_of_letters(end_of_message)
-    encrypted = first_half + second_half
-  end
-
-  def encrypt_dynamic_number_of_letters(end_of_message, i=0)
-    sym_array = [:A, :B, :C]
-    new_message =[] 
-    end_of_message.length.times do 
-      new_message << encode_letter(sym_array[i], end_of_message[i])
-      i+=1
-    end
-    new_message.join
-  end
 end

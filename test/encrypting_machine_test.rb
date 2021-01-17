@@ -57,33 +57,6 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal 27, machine.encoder_hash(:A).count
   end
 
-  def test_message_divisible_by_four?
-    machine = EncryptingMachine.new("hello world!", "09547", "150121")
-    
-    assert_equal true, machine.message_divisible_by_four?
-  end
-
-  def test_message_divisible_by_four_false
-    machine = EncryptingMachine.new("hello world!@%", "09547", "150121")
-    
-    assert_equal false, machine.message_divisible_by_four?
-  end
-
-  def test_encrypt_divisible_by_four
-    machine = EncryptingMachine.new("hello world!", "09547", "150121")
-
-    assert_equal "uypfat ideh!", machine.encrypt_divisible_by_four
-    assert_equal String, machine.encrypt_divisible_by_four.class
-    assert_equal machine.plain_message.length, machine.encrypt_divisible_by_four.length
-  end
-
-  def test_encrypt_divisible_by_four_false
-    machine = EncryptingMachine.new("hello world", "09547", "150121")
-
-    assert_equal "uypfat i", machine.encrypt_divisible_by_four
-    assert_equal String, machine.encrypt_divisible_by_four.class
-  end
-
   def test_encode_letter
     machine = EncryptingMachine.new("hello world!", "09547", "150121")
 
@@ -93,16 +66,36 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal "w", machine.encode_letter(:D, "b")
   end
 
-  def test_encrypt_NOT_divisible_by_four
-    machine = EncryptingMachine.new("hello world!au@", "09547", "150121")
+  def test_encrypt_the_message
+    machine = EncryptingMachine.new("hello world", "02715", "040895")
 
-    assert_equal "uypfat ideh!nn@", machine.encrypt_NOT_divisible_by_four
+    assert_equal "keder ohulw", machine.encrypt_the_message
   end
 
-  def test_encrypt_dynamic_number_of_letters
+
+  def test_encrypt_the_message_exclamation_point
+    machine = EncryptingMachine.new("hello world!", "02715", "040895")
+
+    assert_equal "keder ohulw!", machine.encrypt_the_message
+  end
+
+  def test_encrypt_the_message_new_code_and_date
+    machine = EncryptingMachine.new("hello world!", "09547", "150121")
+
+    assert_equal "uypfat ideh!", machine.encrypt_the_message
+  end
+
+  def test_encrypt_the_message_added_letters_symbols
     machine = EncryptingMachine.new("hello world!au@", "09547", "150121")
 
-    assert_equal "nn@", machine.encrypt_dynamic_number_of_letters("au@")
-    assert_equal String, machine.encrypt_dynamic_number_of_letters("au@").class
+    assert_equal "uypfat ideh!nn@", machine.encrypt_the_message
+  end
+
+  def test_keep_sym_under_three
+    machine = EncryptingMachine.new("hello world!au@", "09547", "150121")
+
+    assert_equal 1, machine.keep_sym_under_three(0)
+    assert_equal 2, machine.keep_sym_under_three(1)
+    assert_equal 0, machine.keep_sym_under_three(3)
   end
 end
