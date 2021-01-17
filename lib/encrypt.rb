@@ -1,3 +1,3 @@
 require_relative './enigma'
 
-enigma = Enigma.new(ARGV[0])
+enigma = Enigma.new(ARGV[0], ARGV[1])

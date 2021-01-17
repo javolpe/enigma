@@ -4,10 +4,12 @@ require_relative './encrypting_machine'
 
 class Enigma 
   attr_reader :starter_message,
+              :output_file,
               :message_file
 
-  def initialize(message_file)
+  def initialize(message_file, writer_file)
      @starter_message = get_starter_message(message_file)
+     @output_file = writer_file
      @message_file = message_file
      get_it
   end
@@ -51,9 +53,14 @@ class Enigma
     encrypt(message)
   end
 
+  def output_to_file(encrypted, code, date)
+    File.open(output_file, "w"){|f| f.write "#{encrypted} \n#{code} \n#{date}"}
+  end
+
   def encrypt(message, code = get_code, date = generate_date)
     machine = EncryptingMachine.new(message, code, date)
     encrypted = machine.encrypt_the_message
+    output_to_file(encrypted, code, date)
     puts "Created #{encrypted} with the key #{code} and date #{date}"
     final_hash = {encryption: encrypted,
                   key: code,
