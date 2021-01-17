@@ -10,8 +10,8 @@ class Enigma
   end
 
   def get_starter_message(message_file)
-    unencoded_message = File.read(message_file)
-    unencoded_message.downcase
+    unencoded_message = File.read(message_file).split("\n")
+    unencoded_message[0].downcase
   end
 
   def generate_code
