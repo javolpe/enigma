@@ -4,12 +4,11 @@ require_relative './encrypting_machine'
 
 class Enigma 
   attr_reader :starter_message,
-              :code
-
+              :message_file
 
   def initialize(message_file)
      @starter_message = get_starter_message(message_file)
-     @code = generate_code(message_file)
+     @message_file = message_file
      get_it
   end
 
@@ -21,16 +20,23 @@ class Enigma
   def generate_code(message_file)
     number = rand.to_s[2..6]
     code = File.read(message_file).split("\n")
-    if code[1].nil? || code[1].length != 5
-      number 
+    if code[1].nil? 
+      final = number 
     else 
-      code[1]
+      final = code[1]
     end
+    final
   end
 
   def generate_date
-    date = Time.now.strftime("%d%m%Y")
-    date = date[0..3]+date[6..8]
+    date = Time.now.strftime("%d%m%y")
+    code = File.read(message_file).split("\n")
+    if code[2].nil? 
+      final = date 
+    else 
+      final = code[2]
+    end
+    final
   end
 
   def message 
@@ -38,17 +44,17 @@ class Enigma
   end
 
   def get_code
-    @code
+    generate_code(message_file)
   end
 
   def get_it
-    encrypt(message, code)
+    encrypt(message)
   end
 
   def encrypt(message, code = get_code, date = generate_date)
     machine = EncryptingMachine.new(message, code, date)
-    encrypted = machine.decide_encryption_path
-    puts "Created some shit with the key #{code} and date #{date} encrypted is #{encrypted}"
+    encrypted = machine.encrypt_the_message
+    puts "Created #{encrypted} with the key #{code} and date #{date}"
     final_hash = {encryption: encrypted,
                   key: code,
                   date: date}
