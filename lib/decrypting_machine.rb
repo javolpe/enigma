@@ -1,6 +1,8 @@
 require_relative './enigma'
+require_relative './encryption_module'
 
 class DecryptingMachine
+  include Encryptable
   attr_reader :plain_message,
               :code,
               :date
@@ -11,15 +13,15 @@ class DecryptingMachine
      @date   = date
   end
 
-  def base 
-    start = ("a".."z").to_a << " "
-  end
+  # def base 
+  #   start = ("a".."z").to_a << " "
+  # end
 
-  def shifter
-    date_integer = @date.to_i
-    squared = date_integer * date_integer
-    final = squared.to_s[-4..-1]
-  end
+  # def shifter
+  #   date_integer = @date.to_i
+  #   squared = date_integer * date_integer
+  #   final = squared.to_s[-4..-1]
+  # end
 
   def shift_hash
     shift = shifter
@@ -30,12 +32,12 @@ class DecryptingMachine
     code_hash = Hash[keys.zip(values)]
   end
 
-  def encoder_hash(symbol)
-    start = base 
-    code_hash = shift_hash
-    finish = start.rotate(code_hash[symbol])
-    encoded_alphabet = Hash[start.zip(finish)]
-  end 
+  # def encoder_hash(symbol)
+  #   start = base 
+  #   code_hash = shift_hash
+  #   finish = start.rotate(code_hash[symbol])
+  #   encoded_alphabet = Hash[start.zip(finish)]
+  # end 
 
   def decrypt_the_message(i = -1)
     sym = 0
@@ -49,20 +51,20 @@ class DecryptingMachine
     new_message.join
   end
 
-  def keep_sym_under_three(sym)
-    if sym >= 3
-       sym = 0
-    else 
-      sym +=1
-    end
-  end
+  # def keep_sym_under_three(sym)
+  #   if sym >= 3
+  #      sym = 0
+  #   else 
+  #     sym +=1
+  #   end
+  # end
 
-  def encode_letter(symbol, letter)
-    encoder = encoder_hash(symbol)
-    if encoder[letter].nil?
-      new_letter = letter
-    else 
-      new_letter = encoder[letter]
-    end
-  end 
+  # def encode_letter(symbol, letter)
+  #   encoder = encoder_hash(symbol)
+  #   if encoder[letter].nil?
+  #     new_letter = letter
+  #   else 
+  #     new_letter = encoder[letter]
+  #   end
+  # end 
 end
