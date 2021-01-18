@@ -1,14 +1,17 @@
 require 'date'
 require 'pry'
 require_relative './encrypting_machine'
+require_relative './decrypting_machine'
 
 class Enigma 
   attr_accessor :message_file,
-                :output_file
+                :output_file,
+                :decrypted_message_file
 
   def initialize()
      @message_file = ""
      @output_file = ""
+     @decrypted_message_file = ""
   end
 
   def message(message_file = @message_file)
@@ -39,19 +42,30 @@ class Enigma
     final
   end
 
-  def output_to_file(encrypted, code, date)
-    File.open(output_file, "w"){|f| f.write "#{encrypted} \n#{code} \n#{date}"}
+  def output_to_file(encrypted)
+    File.open(output_file, "w"){|f| f.write "#{encrypted}"}
   end
 
   
   def encrypt(message, code = generate_code, date = generate_date)
     machine = EncryptingMachine.new(message, code, date)
     encrypted = machine.encrypt_the_message
-    output_to_file(encrypted, code, date)
+    output_to_file(encrypted)
     puts "Created '#{output_file}' with the key #{code} and date #{date}"
     final_hash = {encryption: encrypted,
                   key: code,
-                  date: date}
+                  date: date}  
+  end
+
+  def ouput_decrypted_message(decrypted)
+    File.open(decrypted_message_file, "w"){|f| f.write "#{decrypted}"}
+  end
+  
+  def decrypt(message, key, date)
+    machine = DecryptingMachine.new(message, key, date)
+    decrypted = machine.decrypt_the_message
+    ouput_decrypted_message(decrypted)
+    puts decrypted 
   end
 
 end
