@@ -4,7 +4,7 @@ module  Encryptable
     start = ("a".."z").to_a << " "
   end
 
-  def shifter
+  def offsets
     date_integer = @date.to_i
     squared = date_integer * date_integer
     final = squared.to_s[-4..-1]
@@ -12,7 +12,7 @@ module  Encryptable
 
   def encoder_hash(symbol)
     start = base 
-    code_hash = shift_hash
+    code_hash = key_shift_hash
     finish = start.rotate(code_hash[symbol])
     encoded_alphabet = Hash[start.zip(finish)]
   end 

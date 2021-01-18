@@ -13,8 +13,8 @@ class DecryptingMachine
      @date   = date
   end
 
-  def shift_hash
-    shift = shifter
+  def key_shift_hash
+    shift = offsets
     keys = [:A, :B, :C, :D]
     values = [-(@code[0..1].to_i + shift[0].to_i), -(@code[1..2].to_i + shift[1].to_i)]
     values << -(@code[2..3].to_i + shift[2].to_i)

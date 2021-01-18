@@ -24,15 +24,15 @@ class EncryptingMachineTest < Minitest::Test
     assert_equal 27, machine.base.count
   end
 
-  def test_shifter
+  def test_offsets
     machine = EncryptingMachine.new("hello world!", "09547", "150121")
 
-    assert_equal "4641", machine.shifter
-    assert_equal String, machine.shifter.class
-    assert_equal 4, machine.shifter.length
+    assert_equal "4641", machine.offsets
+    assert_equal String, machine.offsets.class
+    assert_equal 4, machine.offsets.length
   end
 
-  def test_shift_hash
+  def test_key_shift_hash
     machine = EncryptingMachine.new("hello world!", "09547", "150121")
 
     expected = {:A => 13,
@@ -41,8 +41,8 @@ class EncryptingMachineTest < Minitest::Test
                 :D => 48
                 }
     
-    assert_equal expected, machine.shift_hash
-    assert_equal Hash, machine.shift_hash.class
+    assert_equal expected, machine.key_shift_hash
+    assert_equal Hash, machine.key_shift_hash.class
   end
 
   def test_encoder_hash
