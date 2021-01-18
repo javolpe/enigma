@@ -65,7 +65,10 @@ class Enigma
     machine = DecryptingMachine.new(message, key, date)
     decrypted = machine.decrypt_the_message
     ouput_decrypted_message(decrypted)
-    puts decrypted 
+    puts "Created '#{decrypted_message_file}' with the key #{key} and date #{date}"
+    final_hash = {decryption: decrypted,
+                  key: key,
+                  date: date}
   end
 
 end
