@@ -57,14 +57,14 @@ class Enigma
                   date: date}  
   end
 
-  def ouput_decrypted_message(decrypted)
+  def output_decrypted_message(decrypted)
     File.open(decrypted_message_file, "w"){|f| f.write "#{decrypted}"}
   end
   
   def decrypt(message, key, date)
     machine = DecryptingMachine.new(message, key, date)
     decrypted = machine.decrypt_the_message
-    ouput_decrypted_message(decrypted)
+    output_decrypted_message(decrypted)
     puts "Created '#{decrypted_message_file}' with the key #{key} and date #{date}"
     final_hash = {decryption: decrypted,
                   key: key,
